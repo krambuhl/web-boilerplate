@@ -53,10 +53,10 @@ gulp.task('empty', function () {
 gulp.task('styles', function() {
   return gulp.src(path.join(dir.src, 'sass/style.scss'))
     .pipe(sourcemaps.init())
-    .pipe(sass({ style: 'expanded', errLogToConsole: true })) //sourceComments: 'map',
+    .pipe(sass({ style: 'nested' }))
     .pipe(cmq())
-    .pipe(autoprefix({ cascade: true }))
-    .pipe(sourcemaps.write())
+    .pipe(autoprefix())
+    .pipe(sourcemaps.write('./'))
     .pipe(gulp.dest(dir.styles))
     .pipe(minify())
     .pipe(rename('style.min.css'))
@@ -77,9 +77,7 @@ gulp.task('app', function() {
 
 gulp.task('lib', function() {
   return gulp.src(bowerFiles.js)
-    .pipe(sourcemaps.init())
     .pipe(concat('lib.js'))
-    .pipe(sourcemaps.write())
     .pipe(gulp.dest(dir.scripts))
     .pipe(uglify())
     .pipe(rename('lib.min.js'))
