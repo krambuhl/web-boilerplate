@@ -9,7 +9,7 @@
     "postinstall": "bower install",
     "compile": "gulp compile",
     "develop": "gulp develop",
-    "start": "node server.js"
+    "start": "node server/server.js"
   },
   "repository": {
     "type": "git",
