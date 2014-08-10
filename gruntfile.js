@@ -14,7 +14,8 @@ module.exports = function(grunt) {
                 prefix: 'icon',
             },
             generate: {
-                src: 'source/svg',
+                cwd: 'source/svg',
+                src: '**/*',
                 dest: 'dist/assets/svg',
             }
         },

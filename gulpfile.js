@@ -10,6 +10,7 @@ var path  = require('path');
 
 
 // gulp general plugins
+var sequence = require('run-sequence');
 var rename = require('gulp-rename');
 // var concatMaps = require('gulp-concat-sourcemap');
 var concat = require('gulp-concat');
@@ -44,10 +45,10 @@ gulp.task('styles', function() {
     .pipe(sass({ style: 'expanded', errLogToConsole: true })) //sourceComments: 'map',
     .pipe(cmq())
     .pipe(autoprefix({ cascade: true }))
-    .pipe(gulp.dest(path.join('styles', dir.assets)))
+    .pipe(gulp.dest(path.join(dir.assets, 'styles')))
     .pipe(minify())
     .pipe(rename('style.min.css'))
-    .pipe(gulp.dest(path.join('styles', dir.assets)));
+    .pipe(gulp.dest(path.join(dir.assets, 'styles')));
 });
 
 
@@ -99,8 +100,8 @@ gulp.task('watch', function () {
 
 
 gulp.task('empty', function () {
-    return gulp.src(dir.dist, {read: false})
-        .pipe(clean());
+  return gulp.src(dir.dist, {read: false})
+    .pipe(clean());
 });
 
 // gulp.task('bump', function () {
@@ -110,13 +111,20 @@ gulp.task('empty', function () {
 // });
 
 
-gulp.task('copy', ['copy-images', 'copy-fonts']);
-gulp.task('pages', ['grunt-assemble']);
 gulp.task('scripts', ['lib', 'app']);
 gulp.task('icons', ['grunt-iconizr']);
+gulp.task('copy', ['copy-images', 'copy-fonts']);
+gulp.task('pages', function(done) {
+  seqence(['grunt-assemble'], done);
+});
 
-gulp.task('build', ['empty', 'styles', 'scripts', 'pages', 'icons', 'copy']);
-gulp.task('compile', ['build']);
+gulp.task('compile', function(done) {
+  sequence(
+    'empty',
+    ['styles', 'scripts', 'icons', 'copy', 'pages'],
+    done
+  );
+});
 
 gulp.task('develop', ['compile', 'watch']);
 
