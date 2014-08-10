@@ -5,23 +5,23 @@ require('gulp-grunt')(gulp);
 // npm tools
 var path  = require('path');
 
-
 // gulp general plugins
 var sequence = require('run-sequence');
 var rename = require('gulp-rename');
 var replace = require('gulp-replace');
-// var concatMaps = require('gulp-concat-sourcemap');
-var uglify = require('gulp-uglify');
-var concat = require('gulp-concat');
 var clean = require('gulp-clean');
-var bowerFiles  = require('bower-files')();
 var sourcemaps = require('gulp-sourcemaps');
+var livereload = require('gulp-livereload');
 var fileinclude = require('gulp-file-include');
-// var handlebars = require('gulp-compile-handlebars');
-
 var imagemin = require('gulp-imagemin');
 var pngcrush = require('imagemin-pngcrush');
 
+// js tasks
+var bowerFiles  = require('bower-files')();
+var uglify = require('gulp-uglify');
+var concat = require('gulp-concat');
+
+// image/svg tasks
 
 // css tasks
 var sass = require('gulp-sass');
@@ -132,6 +132,9 @@ gulp.task('watch', function () {
 
   // run `app` task on js file changes in './source/app'
   gulp.watch(path.join(dir.src, '**/*.{json,html,hbs,handlebars}'), ['grunt-assemble']);
+
+  livereload.listen();
+  gulp.watch('dist/**/*').on('change', livereload.changed);
 });
 
 gulp.task('compile', function(done) {
