@@ -16,6 +16,7 @@ var concat = require('gulp-concat');
 var clean = require('gulp-clean');
 var bowerFiles  = require('bower-files')();
 var sourcemaps = require('gulp-sourcemaps');
+var fileinclude = require('gulp-file-include');
 // var handlebars = require('gulp-compile-handlebars');
 
 var imagemin = require('gulp-imagemin');
@@ -64,9 +65,9 @@ gulp.task('styles', function() {
 
 
 gulp.task('app', function() {
-  return gulp.src(path.join(dir.src, 'app/**/*.js'))
+  return gulp.src(path.join(dir.src, 'app/app.js'))
     .pipe(sourcemaps.init())
-    .pipe(concat('app.js'))
+    .pipe(fileinclude('//=')) //=include('url.js')
     .pipe(sourcemaps.write())
     .pipe(gulp.dest(dir.scripts))
     .pipe(uglify())
