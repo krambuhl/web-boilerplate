@@ -7,6 +7,6 @@
 	"icon": "",
 	"apple-icon": "",
 
-	"scripts": [],
+	"scripts": ["lib", "app"],
 	"stylesheets": ["styles/style"]
 }

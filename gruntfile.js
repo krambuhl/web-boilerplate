@@ -14,11 +14,12 @@ module.exports = function(grunt) {
 
         iconizr: {
             options: {
+                spritedir: 'output',
                 prefix: 'icon',
+                verbose: 1
             },
             generate: {
-                cwd: 'source/svg',
-                src: '**/*',
+                src: 'source/svg',
                 dest: 'dist/assets/svg',
             }
         },
@@ -27,10 +28,11 @@ module.exports = function(grunt) {
             options: {
                 assets: 'assets',
                 layoutdir: 'source/templates/layouts',
-                partials: ['source/templates/partials/**/*.hbs'],
+                partials: ['source/templates/partials/**/*.{hbs,handlebars,html}'],
                 layout: 'main.hbs',
                 data: ['source/data/**/*.json'],
-                pkg: '<%= pkg %>'
+                pkg: '<%= pkg %>',
+                iconizr: 'dist/svg/iconizr-fragment.html'
             },
             site: {
                 expand: true,

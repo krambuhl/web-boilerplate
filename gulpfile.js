@@ -1,6 +1,3 @@
-// npm package
-var pkg = require('./package.json');
-
 //gulp
 var gulp = require('gulp');
 require('gulp-grunt')(gulp);
@@ -12,9 +9,13 @@ var path  = require('path');
 // gulp general plugins
 var sequence = require('run-sequence');
 var rename = require('gulp-rename');
+var replace = require('gulp-replace');
 // var concatMaps = require('gulp-concat-sourcemap');
+var uglify = require('gulp-uglify');
 var concat = require('gulp-concat');
 var clean = require('gulp-clean');
+var bowerFiles  = require('bower-files')();
+var sourcemaps = require('gulp-sourcemaps');
 // var handlebars = require('gulp-compile-handlebars');
 
 var imagemin = require('gulp-imagemin');
@@ -32,8 +33,16 @@ var dir = {
   src: 'source',
   dist: 'dist',
   assets: 'dist/assets',
+  styles: 'dist/assets/styles',
+  scripts: 'dist/assets/scripts',
   tests: 'tests'
 };
+
+
+gulp.task('empty', function () {
+  return gulp.src(dir.dist, {read: false})
+    .pipe(clean());
+});
 
 // __styles__ task:
 // - sass
@@ -42,18 +51,39 @@ var dir = {
 // - css minifier
 gulp.task('styles', function() {
   return gulp.src(path.join(dir.src, 'sass/style.scss'))
+    .pipe(sourcemaps.init())
     .pipe(sass({ style: 'expanded', errLogToConsole: true })) //sourceComments: 'map',
     .pipe(cmq())
     .pipe(autoprefix({ cascade: true }))
-    .pipe(gulp.dest(path.join(dir.assets, 'styles')))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(dir.styles))
     .pipe(minify())
     .pipe(rename('style.min.css'))
-    .pipe(gulp.dest(path.join(dir.assets, 'styles')));
+    .pipe(gulp.dest(dir.styles));
 });
 
 
-gulp.task('app', function() { return; });
-gulp.task('lib', function() { return; });
+gulp.task('app', function() {
+  return gulp.src(path.join(dir.src, 'app/**/*.js'))
+    .pipe(sourcemaps.init())
+    .pipe(concat('app.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(dir.scripts))
+    .pipe(uglify())
+    .pipe(rename('app.min.js'))
+    .pipe(gulp.dest(dir.scripts));
+});
+
+gulp.task('lib', function() {
+  return gulp.src(bowerFiles.js)
+    .pipe(sourcemaps.init())
+    .pipe(concat('lib.js'))
+    .pipe(sourcemaps.write())
+    .pipe(gulp.dest(dir.scripts))
+    .pipe(uglify())
+    .pipe(rename('lib.min.js'))
+    .pipe(gulp.dest(dir.scripts));
+});
 
 
 gulp.task('pull-data', function() {
@@ -82,6 +112,13 @@ gulp.task('copy-fonts', function() {
     .pipe(gulp.dest(path.join(dir.assets, 'fonts')));
 });
 
+gulp.task('post-iconizr', function() {
+ return gulp.src(path.join(dir.assets, 'svg/sprite-loader-fragment.html'))
+  .pipe(replace(/\/dist/ig, ''))
+  .pipe(rename('iconizr-fragment.hbs'))
+  .pipe(gulp.dest(path.join(dir.src, 'templates/partials')));
+});
+
 
 // __watch__ task:
 gulp.task('watch', function () {
@@ -95,14 +132,9 @@ gulp.task('watch', function () {
   gulp.watch(path.join(dir.src, 'svg/**/*.svg'), ['icons']);
 
   // run `app` task on js file changes in './source/app'
-  gulp.watch(path.join(dir.src, '**/*.{json,hbs,handlebars}'), ['grunt-assemble']);
+  gulp.watch(path.join(dir.src, '**/*.{json,html,hbs,handlebars}'), ['grunt-assemble']);
 });
 
-
-gulp.task('empty', function () {
-  return gulp.src(dir.dist, {read: false})
-    .pipe(clean());
-});
 
 // gulp.task('bump', function () {
 //   return gulp.src(['./package.json', './bower.json'])
@@ -119,18 +151,22 @@ gulp.task('compile', function(done) {
       'scripts',
       'icons',
       'copy',
-      'pages'
     ],
+    'pages',
     done
   );
 });
 
+
 gulp.task('sync', ['grunt-update_json']);
 gulp.task('scripts', ['lib', 'app']);
-gulp.task('icons', ['grunt-iconizr']);
 gulp.task('copy', ['copy-images', 'copy-fonts']);
+gulp.task('icons', function(done) {
+  sequence('grunt-iconizr', 'post-iconizr', done);
+});
+
 gulp.task('pages', function(done) {
-  sequence(['grunt-assemble'], done);
+  sequence('grunt-assemble', done);
 });
 
 

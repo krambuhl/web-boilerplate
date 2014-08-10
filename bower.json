@@ -9,5 +9,9 @@
 	"repository": {
 		"type": "git",
 		"url": "git@github.com:krambuhl/web-boilerplate.git"
+	},
+	"dependencies": {
+		"jquery": "~2.1.1",
+		"underscore": "~1.6.0"
 	}
 }

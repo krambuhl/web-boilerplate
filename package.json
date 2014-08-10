@@ -8,7 +8,8 @@
   "scripts": {
     "postinstall": "bower install",
     "compile": "gulp compile",
-    "develop": "gulp develop"
+    "develop": "gulp develop",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",
@@ -17,6 +18,7 @@
   "private": true,
   "devDependencies": {
     "assemble": "0.4.4",
+    "bower-files": "^1.4.1",
     "grunt": "^0.4.5",
     "grunt-iconizr": "^0.2.2",
     "grunt-update-json": "^0.1.3",
@@ -29,7 +31,10 @@
     "gulp-grunt": "^0.5.2",
     "gulp-imagemin": "^0.6.2",
     "gulp-rename": "^1.2.0",
+    "gulp-replace": "^0.4.0",
     "gulp-sass": "0.7.1",
+    "gulp-sourcemaps": "^1.1.1",
+    "gulp-uglify": "^0.3.1",
     "imagemin-pngcrush": "^0.1.0",
     "run-sequence": "^0.3.6"
   }
