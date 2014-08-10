@@ -136,13 +136,6 @@ gulp.task('watch', function () {
   gulp.watch(path.join(dir.src, '**/*.{json,html,hbs,handlebars}'), ['grunt-assemble']);
 });
 
-
-// gulp.task('bump', function () {
-//   return gulp.src(['./package.json', './bower.json'])
-//     .pipe(bump())
-//     .pipe(gulp.dest('./'));
-// });
-
 gulp.task('compile', function(done) {
   sequence(
     'empty',
