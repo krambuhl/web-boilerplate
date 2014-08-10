@@ -1,0 +1,15 @@
+.slice {
+    display: table;
+    table-layout: fixed; // makes items equal sizes automatically
+    width: 100%;
+}
+
+.slice-autosize {
+    table-layout: auto;
+}
+
+.slice-item {
+    display: table-cell;
+    vertical-align: top;
+    width: 100%;
+}

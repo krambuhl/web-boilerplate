@@ -1,0 +1,26 @@
+.heading {
+	font-family: $fontstack-sans;
+	font-weight: 500;
+	font-size: 2.5rem;
+	line-height: 1.4em;
+}
+
+.heading-light {
+	font-weight: 300;
+}
+
+.heading-heavy {
+	font-weight: 700;
+}
+
+h1, h2, h3, h4, h5, h6 {
+	@extend .heading;
+}
+
+// normal screens
+h1 { font-size: 3.5rem; }
+h2 { font-size: 3em; }
+h3 { font-size: 2.5rem; }
+h4 { font-size: 2.25rem; }
+h5 { font-size: 2rem; }
+h6 { font-size: 1.75rem; }

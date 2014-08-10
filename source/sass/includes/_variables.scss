@@ -1,0 +1,20 @@
+// FONTS
+$font-serif: "Droid Serif";
+$font-sans: "Museo Sans";
+$font-mono: "PT Mono";
+
+$fontstack-serif: $font-serif, sans-serif;
+$fontstack-sans: $font-sans, Verdana, sans-serif;
+$fontstack-mono: $font-mono, monospace;
+
+// COLORS
+
+$site-dark:  #222;
+$site-light: #fff;
+
+//site colors
+$site-bg: $site-light;
+$site-color: $site-dark;
+
+// when a user highlights text this is the super duper color!
+$selection-color: mix($site-light, $site-dark);

@@ -1,0 +1,28 @@
+{
+  "name": "web-boilerplate",
+  "version": "0.1.0",
+  "engines": {
+    "node": "0.10.x"
+  },
+  "scripts": {
+    "compile": "gulp compile",
+    "develop": "gulp develop"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:krambuhl/web-boilerplate.git"
+  },
+  "private": true,
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-iconizr": "^0.2.2",
+    "gulp": "^3.8.7",
+    "gulp-autoprefixer": "0.0.8",
+    "gulp-clean-css": "^1.0.2",
+    "gulp-combine-media-queries": "^0.1.0",
+    "gulp-concat": "^2.3.4",
+    "gulp-grunt": "^0.5.2",
+    "gulp-rename": "^1.2.0",
+    "gulp-sass": "0.7.1"
+  }
+}

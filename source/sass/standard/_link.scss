@@ -1,0 +1,6 @@
+.link {
+	color: #222;
+	text-decoration: none;
+}
+
+a { @extend .link }

@@ -1,0 +1,26 @@
+.content {
+	& > * {
+	}
+
+	p, ul, ol, blockquote, pre, code {}
+
+	p { }
+
+	ul, ol { }
+
+	ul { list-style: square outside; }
+	ol { list-style: lower-roman outside; }
+
+	blockquote {
+		& > * {}
+		& > label {
+			display: block;
+			font-style: italic;
+		}
+	}
+
+	pre {
+		font-family: $fontstack-mono;
+		& > code {}
+	}
+}

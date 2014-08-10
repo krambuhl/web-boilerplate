@@ -1,0 +1,26 @@
+@mixin animation($animate...) {
+    $max: length($animate);
+    $animations: '';
+
+    @for $i from 1 through $max {
+        $animations: #{$animations + nth($animate, $i)};
+
+        @if $i < $max {
+            $animations: #{$animations + ", "};
+        }
+    }
+
+    -webkit-animation: $animations;
+       -moz-animation: $animations;
+        -ms-animation: $animations;
+         -o-animation: $animations;
+            animation: $animations;
+}
+
+@mixin keyframes($name) {
+    @-webkit-keyframes #{$name} { @content; }
+    @-moz-keyframes #{$name} { @content; }
+    @-ms-keyframes #{$name} { @content; }
+    @-o-keyframes #{$name} { @content; }
+    @keyframes #{$name} { @content; }
+}

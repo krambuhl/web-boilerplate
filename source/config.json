@@ -1,0 +1,9 @@
+{
+	"baseurl": "http://proto.stumptownbear.com/v9",
+
+	"scriptsPath": "",
+	"scripts": ["app.js"],
+
+	"stylesheetPath": "",
+	"stylesheets": ["fonts/fonts.css", "style.css"]
+}
