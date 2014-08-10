@@ -1,13 +1,13 @@
 {
   "name": "web-boilerplate",
   "homepage": "https://github.com/krambuhl/web-boilerplate",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "engines": {
     "node": "0.10.x"
   },
   "scripts": {
-    "compile": "gulp compile",
     "bower": "bower install",
+    "compile": "gulp compile",
     "develop": "gulp develop",
     "start": "node server/server.js"
   },
