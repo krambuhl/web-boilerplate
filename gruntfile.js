@@ -1,5 +1,6 @@
-module.exports = function (grunt) {
+module.exports = function(grunt) {
     grunt.loadNpmTasks('grunt-iconizr');
+    grunt.loadNpmTasks('assemble');
 
     // Project configuration.
     grunt.initConfig({
@@ -11,17 +12,27 @@ module.exports = function (grunt) {
         iconizr: {
             options: {
                 prefix: 'icon',
-                verbose: 1
             },
             generate: {
                 src: 'source/svg',
                 dest: 'dist/assets/svg',
             }
+        },
+
+        assemble: {
+            options: {
+                assets: 'assets',
+                layoutdir: 'source/templates/layouts',
+                partials: ['source/templates/partials/**/*.hbs'],
+                layout: 'main.hbs',
+                data: ['source/data/**/*.json']
+            },
+            site: {
+                expand: true,
+                cwd: 'source/pages',
+                src: ['**/*.hbs'],
+                dest: 'dist/'
+            }
         }
     });
-
-
-    // icons
-    grunt.registerTask('default', ['iconizr']);
-
 };

@@ -1,0 +1,12 @@
+{
+	"title": "Web Boilerplate",
+
+	"description": "A Website Boilerplate",
+	"author": "IL7 / Evan Krambuhl",
+
+	"icon": "",
+	"apple-icon": "",
+
+	"scripts": [],
+	"stylesheets": ["fonts/fonts", "styles/style"]
+}

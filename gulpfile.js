@@ -8,11 +8,17 @@ require('gulp-grunt')(gulp);
 // npm tools
 var path  = require('path');
 
+
 // gulp general plugins
 var rename = require('gulp-rename');
 // var concatMaps = require('gulp-concat-sourcemap');
 var concat = require('gulp-concat');
+var clean = require('gulp-clean');
 // var handlebars = require('gulp-compile-handlebars');
+
+var imagemin = require('gulp-imagemin');
+var pngcrush = require('imagemin-pngcrush');
+
 
 // css tasks
 var sass = require('gulp-sass');
@@ -38,10 +44,10 @@ gulp.task('styles', function() {
     .pipe(sass({ style: 'expanded', errLogToConsole: true })) //sourceComments: 'map',
     .pipe(cmq())
     .pipe(autoprefix({ cascade: true }))
-    .pipe(gulp.dest(dir.assets))
+    .pipe(gulp.dest(path.join('styles', dir.assets)))
     .pipe(minify())
-    .pipe(rename('min/style.min.css'))
-    .pipe(gulp.dest(dir.assets));
+    .pipe(rename('style.min.css'))
+    .pipe(gulp.dest(path.join('styles', dir.assets)));
 });
 
 
@@ -66,6 +72,7 @@ gulp.task('build-pages', function() {
 
 gulp.task('copy-images', function() {
   return gulp.src(path.join(dir.src, 'images/**/*.{jpg,jpeg,png,gif}'))
+    .pipe(imagemin({ use: [pngcrush()] }))
     .pipe(gulp.dest(path.join(dir.assets, 'images')));
 });
 
@@ -87,7 +94,13 @@ gulp.task('watch', function () {
   gulp.watch(path.join(dir.src, 'svg/**/*.svg'), ['icons']);
 
   // run `app` task on js file changes in './source/app'
-  gulp.watch(path.join(dir.src, '**/*.{html,hbs,handlebars}'), ['build-pages']);
+  gulp.watch(path.join(dir.src, '**/*.{json,hbs,handlebars}'), ['grunt-assemble']);
+});
+
+
+gulp.task('empty', function () {
+    return gulp.src(dir.dist, {read: false})
+        .pipe(clean());
 });
 
 // gulp.task('bump', function () {
@@ -98,11 +111,13 @@ gulp.task('watch', function () {
 
 
 gulp.task('copy', ['copy-images', 'copy-fonts']);
-gulp.task('pages', ['pull-data', 'build-pages']);
+gulp.task('pages', ['grunt-assemble']);
 gulp.task('scripts', ['lib', 'app']);
 gulp.task('icons', ['grunt-iconizr']);
 
-gulp.task('compile', ['styles', 'scripts', 'icons', 'copy']);
+gulp.task('build', ['empty', 'styles', 'scripts', 'pages', 'icons', 'copy']);
+gulp.task('compile', ['build']);
+
 gulp.task('develop', ['compile', 'watch']);
 
 gulp.task('default', ['develop']);
