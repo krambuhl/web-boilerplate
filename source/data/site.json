@@ -8,5 +8,5 @@
 	"apple-icon": "",
 
 	"scripts": [],
-	"stylesheets": ["fonts/fonts", "styles/style"]
+	"stylesheets": ["styles/style"]
 }

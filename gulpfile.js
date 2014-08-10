@@ -110,22 +110,29 @@ gulp.task('empty', function () {
 //     .pipe(gulp.dest('./'));
 // });
 
-
-gulp.task('scripts', ['lib', 'app']);
-gulp.task('icons', ['grunt-iconizr']);
-gulp.task('copy', ['copy-images', 'copy-fonts']);
-gulp.task('pages', function(done) {
-  seqence(['grunt-assemble'], done);
-});
-
 gulp.task('compile', function(done) {
   sequence(
     'empty',
-    ['styles', 'scripts', 'icons', 'copy', 'pages'],
+    [
+      'sync',
+      'styles',
+      'scripts',
+      'icons',
+      'copy',
+      'pages'
+    ],
     done
   );
 });
 
-gulp.task('develop', ['compile', 'watch']);
+gulp.task('sync', ['grunt-update_json']);
+gulp.task('scripts', ['lib', 'app']);
+gulp.task('icons', ['grunt-iconizr']);
+gulp.task('copy', ['copy-images', 'copy-fonts']);
+gulp.task('pages', function(done) {
+  sequence(['grunt-assemble'], done);
+});
 
+
+gulp.task('develop', ['compile', 'watch']);
 gulp.task('default', ['develop']);
