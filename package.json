@@ -6,8 +6,8 @@
     "node": "0.10.x"
   },
   "scripts": {
-    "postinstall": "bower install",
     "compile": "gulp compile",
+    "bower": "bower install",
     "develop": "gulp develop",
     "start": "node server/server.js"
   },
