@@ -36,6 +36,6 @@ Explainations
 
 ####Grunt & Gulp are Better Together
 
-Gulp & Grunt are both great at some things, but both fall flat in other ways.  Grunt has a great community of tools that are well fleshed out and great, but the slow speed of the basic I/O system in grunt compounds in larger application.  In complex build systems this underlying lag becomes very noticeable; that is where gulp comes in.  Gulp is very good at batching processes, it runs in parallel by default which tends to be very fast, but the ideology of gulp makes certain tasks treacherous.
+Gulp & Grunt are both great at some things, but both fall flat in other ways.  Grunt has a great community of tools that are well fleshed out and great, but the slow speed of the basic I/O system in grunt compounds in larger application.  That is where gulp comes in.  Gulp is very good at batching processes, it runs in parallel by default which tends to be very fast, but the ideology of gulp makes certain tasks treacherous.
 
 Gulp is used as the basic task runner, but cetain -- usually more complex -- tasks are delegated to grunt using [gulp-grunt](https://www.npmjs.org/package/gulp-grunt).  `npm run` is used over gulp/grunt commands so that as technology changes the tools api is maintained.  This also removes the requirement to install the gulp & grunt commands globally, which can be clunky on remote environments.
