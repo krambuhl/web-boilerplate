@@ -202,7 +202,7 @@ gulp.task('watch', function () {
 
 // Task `zip`
 gulp.task('zip', function() { 
-  var name = process.env.npm_config_name;
+  var name = process.env.npm_config_archive;
   if (!name) {
     name = pkg.name + '-' + pkg.version;
   }
@@ -220,9 +220,8 @@ gulp.task('archive', function(done) {
     'zip',
     function() {
       env = orgenv;
-      return;
-    },
-    done
+      done();
+    }
   );
 });
 

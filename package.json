@@ -9,6 +9,7 @@
     "bower": "bower install",
     "compile": "gulp compile",
     "develop": "gulp develop",
+    "archive": "gulp archive",
     "start": "node server/server.js"
   },
   "repository": {

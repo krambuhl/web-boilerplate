@@ -3,7 +3,9 @@
 <div><strong>{{@key}}</strong> - {{this}}</div>
 {{/each}}
 
-<h2>Here are my DevDependencies</h2>
-{{#each pkg.devDependencies}}
-<div><strong>{{@key}}</strong> - {{this}}</div>
-{{/each}}
+{{#unless env.production}}
+	<h2>Here are my DevDependencies</h2>
+	{{#each pkg.devDependencies}}
+	<div><strong>{{@key}}</strong> - {{this}}</div>
+	{{/each}}
+{{/unless}}
