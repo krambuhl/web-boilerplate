@@ -9,7 +9,7 @@ Tasks
 - ```npm run bower``` -- alias for bower install __required before compile__
 - ```npm run compile``` -- compile source files to dist folder
 - ```npm run develop``` -- run compile, then watch for file changes
-- ```npm run archive [--name name]```  -- create zip archive of dist folder
+- ```npm run archive [--archive name]```  -- create zip archive of dist folder
 - ```npm run start``` -- start static node server, compatible with heroku
 
 
