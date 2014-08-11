@@ -6,6 +6,7 @@
     "node": "0.10.x"
   },
   "scripts": {
+    
     "vendor": "bower install",
     "compile": "gulp compile",
     "develop": "gulp develop",
