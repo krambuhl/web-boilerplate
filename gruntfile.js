@@ -34,6 +34,7 @@ module.exports = function(grunt) {
                 pkg: '<%= pkg %>',
                 iconizr: 'dist/svg/iconizr-fragment.html'
             },
+
             pages: {
                 expand: true,
                 cwd: 'source/templates/pages',
@@ -49,7 +50,7 @@ module.exports = function(grunt) {
                 fields: [
                     'name',
                     'author',
-                    'version',  
+                    'version',
                     'repository'
                 ]
             }

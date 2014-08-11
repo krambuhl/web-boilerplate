@@ -3,7 +3,10 @@ var gulp = require('gulp');
 require('gulp-grunt')(gulp);
 
 // npm tools
-var path  = require('path');
+var pkg = require('./package.json');
+var path = require('path');
+var fs = require('fs');
+var _ = require('lodash');
 
 // gulp general plugins
 var sequence = require('run-sequence');
@@ -40,6 +43,10 @@ var dir = {
   tests: 'tests'
 };
 
+var env = {
+  production: false
+};
+
 
 // Task `empty`
 // empties the dist folder before each startup
@@ -50,6 +57,20 @@ gulp.task('empty', function () {
     .pipe(clean());
 });
 
+// Task `define-env`
+// creates `env.json` including cli options
+// > input CLI_ARGUMENTS
+//  ==> `env.json` 
+gulp.task('define-env', function(done) {
+  var environment = _.extend({}, env, {
+    production: process.env.npm_config_production
+  });
+
+  fs.writeFile(path.join(dir.src,'data/env.json'), JSON.stringify(environment), function(err) {
+    if (err) throw err;
+    done();
+  });
+});
 
 // Task `styles`
 // compiles stylesheet and optimises file
@@ -179,12 +200,38 @@ gulp.task('watch', function () {
   livereload.listen();
 });
 
+// Task `zip`
+gulp.task('zip', function() { 
+  var name = process.env.npm_config_name;
+  if (!name) {
+    name = pkg.name + '-' + pkg.version;
+  }
+
+  return;
+});
+
+
+gulp.task('archive', function(done) {
+  var orgenv = env;
+  env.production = true;
+
+  sequence(
+    'compile',
+    'zip',
+    function() {
+      env = orgenv;
+      return;
+    },
+    done
+  );
+});
+
 
 // Task `compile`
 // runs blocks of build tasks in specific order 
 gulp.task('compile', function(done) {
   sequence(
-    ['empty', 'sync'],
+    ['empty', 'sync', 'define-env'],
     ['styles','scripts','icons','copy'],
     'pages',
     done

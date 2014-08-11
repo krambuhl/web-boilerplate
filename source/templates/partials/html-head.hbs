@@ -22,4 +22,5 @@
   {{/each}}
   {{>iconizr-fragment}}
 </head>
-<body>
+
+<body class="{{#if env.production}}env-production{{else}}env-development{{/if}}"">
