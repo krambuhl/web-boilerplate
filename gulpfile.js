@@ -2,8 +2,13 @@
 var gulp = require('gulp');
 require('gulp-grunt')(gulp);
 
+// package.json data
+var pkg = require('./package.json');
+
 // npm tools
-var path  = require('path');
+var path = require('path');
+var fs = require('fs');
+var _ = require('lodash');
 
 // gulp general plugins
 var sequence = require('run-sequence');
@@ -15,6 +20,7 @@ var livereload = require('gulp-livereload');
 // build / dist
 var clean = require('gulp-clean');
 var fileinclude = require('gulp-file-include');
+var zip = require('gulp-zip');
 
 // js tasks
 var bowerFiles  = require('bower-files')();
@@ -37,7 +43,12 @@ var dir = {
   assets: 'dist/assets',
   styles: 'dist/assets/styles',
   scripts: 'dist/assets/scripts',
+  archive: 'archives',
   tests: 'tests'
+};
+
+var env = {
+  production: false
 };
 
 
@@ -48,6 +59,22 @@ var dir = {
 gulp.task('empty', function () {
   return gulp.src(dir.dist, {read: false})
     .pipe(clean());
+});
+
+
+// Task `define-env`
+// creates `env.json` including cli options
+// > input CLI_ARGUMENTS
+//  ==> `env.json` 
+gulp.task('define-env', function(done) {
+  var environment = _.extend({}, env, {
+    production: process.env.npm_config_production
+  });
+
+  fs.writeFile(path.join(dir.src,'data/env.json'), JSON.stringify(environment), function(err) {
+    if (err) throw err;
+    done();
+  });
 });
 
 
@@ -179,12 +206,39 @@ gulp.task('watch', function () {
   livereload.listen();
 });
 
+// Task `zip`
+gulp.task('zip', function() { 
+  var name = process.env.npm_config_archive;
+  if (!name) {
+    name = pkg.name + '-' + pkg.version;
+  }
+
+  return gulp.src(path.join(dir.dist, '**/*'))
+    .pipe(zip(name + '.zip'))
+    .pipe(gulp.dest(dir.archive));
+});
+
+
+gulp.task('archive', function(done) {
+  var orgenv = env;
+  env.production = true;
+
+  sequence(
+    'compile',
+    'zip',
+    function() {
+      env = orgenv;
+      done();
+    }
+  );
+});
+
 
 // Task `compile`
 // runs blocks of build tasks in specific order 
 gulp.task('compile', function(done) {
   sequence(
-    ['empty', 'sync'],
+    ['empty', 'sync', 'define-env'],
     ['styles','scripts','icons','copy'],
     'pages',
     done
