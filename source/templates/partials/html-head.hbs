@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html lang="en-US" dir="ltr" class="{{#if env.production}}env-production{{else}}env-develop{{/if}}">
 <head>
   <title>{{site.title}}</title>
   <meta name="description" content="{{site.description}}" />
@@ -18,9 +18,9 @@
   <link rel="apple-touch-icon" href="{{site.apple-icon}}">
 
   {{#each site.stylesheets}}
-  <link href="/assets/{{.}}.css" rel="stylesheet" />
+  <link href="/assets/{{.}}{{#if ../env.production}}.min{{/if}}.css" rel="stylesheet" />
   {{/each}}
   {{>iconizr-fragment}}
 </head>
 
-<body class="{{#if env.production}}env-production{{else}}env-development{{/if}}">
+<body>
