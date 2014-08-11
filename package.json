@@ -1,7 +1,7 @@
 {
   "name": "web-boilerplate",
   "homepage": "https://github.com/krambuhl/web-boilerplate",
-  "version": "0.2.3",
+  "version": "0.3.0",
   "engines": {
     "node": "0.10.x"
   },
@@ -38,6 +38,7 @@
     "gulp-sass": "0.7.1",
     "gulp-sourcemaps": "^1.1.1",
     "gulp-uglify": "^0.3.1",
+    "gulp-zip": "^1.0.0",
     "lodash": "^2.4.1",
     "run-sequence": "^0.3.6"
   },

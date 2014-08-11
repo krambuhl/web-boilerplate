@@ -2,8 +2,10 @@
 var gulp = require('gulp');
 require('gulp-grunt')(gulp);
 
-// npm tools
+// package.json data
 var pkg = require('./package.json');
+
+// npm tools
 var path = require('path');
 var fs = require('fs');
 var _ = require('lodash');
@@ -18,6 +20,7 @@ var livereload = require('gulp-livereload');
 // build / dist
 var clean = require('gulp-clean');
 var fileinclude = require('gulp-file-include');
+var zip = require('gulp-zip');
 
 // js tasks
 var bowerFiles  = require('bower-files')();
@@ -40,6 +43,7 @@ var dir = {
   assets: 'dist/assets',
   styles: 'dist/assets/styles',
   scripts: 'dist/assets/scripts',
+  archive: 'archives',
   tests: 'tests'
 };
 
@@ -57,6 +61,7 @@ gulp.task('empty', function () {
     .pipe(clean());
 });
 
+
 // Task `define-env`
 // creates `env.json` including cli options
 // > input CLI_ARGUMENTS
@@ -71,6 +76,7 @@ gulp.task('define-env', function(done) {
     done();
   });
 });
+
 
 // Task `styles`
 // compiles stylesheet and optimises file
@@ -207,7 +213,9 @@ gulp.task('zip', function() {
     name = pkg.name + '-' + pkg.version;
   }
 
-  return;
+  return gulp.src(path.join(dir.dist, '**/*'))
+    .pipe(zip(name + '.zip'))
+    .pipe(gulp.dest(dir.archive));
 });
 
 
