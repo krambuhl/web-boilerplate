@@ -5,6 +5,7 @@ Frontend boilerplate for web base projects.  Provides a set of tools for buildin
 
 Tasks
 ------
+
 - ```npm run bower``` -- alias for bower install __required before compile__
 - ```npm run compile``` -- compile source files to dist folder
 - ```npm run develop``` -- run compile, then watch for file changes
