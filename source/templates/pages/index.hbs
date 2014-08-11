@@ -1,0 +1,9 @@
+<h2>Here are my Dependencies</h2>
+{{#each pkg.dependencies}}
+<div><strong>{{@key}}</strong> - {{this}}</div>
+{{/each}}
+
+<h2>Here are my DevDependencies</h2>
+{{#each pkg.devDependencies}}
+<div><strong>{{@key}}</strong> - {{this}}</div>
+{{/each}}

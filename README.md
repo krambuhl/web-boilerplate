@@ -5,20 +5,29 @@ Frontend boilerplate for web base projects.  Provides a set of tools for buildin
 
 Tasks
 ------
+
 - ```npm run bower``` -- alias for bower install __required before compile__
 - ```npm run compile``` -- compile source files to dist folder
-- ```npm run develop``` -- run compile, then watch file changes
+- ```npm run develop``` -- run compile, then watch for file changes
 - ```npm start``` -- start static node server, compatible with heroku
 
 
 Recommendations
 ------
 
+####Aliases
+
 Add a few aliases to your ```.bash_profile``` to ease typing common commands.
 
 - ```alias nrun="npm run"```
 - ```alias npm-sd="npm install --save-dev"```
 
+####Livereload
+
+Livereload is supported by default, but will require a browser plugin to work properly. 
+- [Chrome Extension](https://chrome.google.com/webstore/detail/livereload/jnihajbhpnppcggbcgedagnkighmdlei)
+- [Mozilla Addon](https://addons.mozilla.org/en-US/firefox/addon/livereload)
+- [Safari Extension](http://download.livereload.com/2.0.9/LiveReload-2.0.9.safariextz)
 
 Explainations
 ----
