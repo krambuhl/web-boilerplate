@@ -17,6 +17,9 @@ var replace = require('gulp-replace');
 var sourcemaps = require('gulp-sourcemaps');
 var livereload = require('gulp-livereload');
 
+// tests / docs
+var mocha = require('gulp-mocha-phantomjs');
+
 // build / dist
 var clean = require('gulp-clean');
 var fileinclude = require('gulp-file-include');
@@ -193,7 +196,7 @@ gulp.task('watch', function () {
   gulp.watch(path.join(dir.src, 'sass/**/*.{css,sass,scss}'), ['styles']);
 
   // run `app` task on js file changes in './source/app'
-  gulp.watch(path.join(dir.src, 'app/**/*.js'), ['app']);
+  gulp.watch(path.join(dir.src, 'app/**/*.js'), ['watch-test']);
 
   // run `icons` task on svg file changes in './source/svg'
   gulp.watch(path.join(dir.src, 'svg/**/*.svg'), ['icons']);
@@ -206,7 +209,12 @@ gulp.task('watch', function () {
   livereload.listen();
 });
 
+
 // Task `zip`
+// archives dist folder into zip
+// > input `dist` folder
+//  - zip
+//  ==> output `archives/archive.zip`
 gulp.task('zip', function() { 
   var name = process.env.npm_config_archive;
   if (!name) {
@@ -218,7 +226,10 @@ gulp.task('zip', function() {
     .pipe(gulp.dest(dir.archive));
 });
 
-
+// Task `archive`
+// task runner for archiving files
+//  - compile 
+//  - zip
 gulp.task('archive', function(done) {
   var orgenv = env;
   env.production = true;
@@ -234,6 +245,19 @@ gulp.task('archive', function(done) {
 });
 
 
+// Task `test`
+// run test runner and output results
+gulp.task('test', function () {
+  return gulp.src(path.join(dir.tests, 'tests.html'))
+    .pipe(mocha({ reporter: 'spec' }));
+});
+
+gulp.task('watch-test', function(done) {
+  sequence('app', 'test', done);
+});
+
+
+
 // Task `compile`
 // runs blocks of build tasks in specific order 
 gulp.task('compile', function(done) {
@@ -241,6 +265,7 @@ gulp.task('compile', function(done) {
     ['empty', 'sync', 'define-env'],
     ['styles','scripts','icons','copy'],
     'pages',
+    'test',
     done
   );
 });
