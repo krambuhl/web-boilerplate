@@ -265,7 +265,6 @@ gulp.task('compile', function(done) {
     ['empty', 'sync', 'define-env'],
     ['styles','scripts','icons','copy'],
     'pages',
-    'test',
     done
   );
 });
