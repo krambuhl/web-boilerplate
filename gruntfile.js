@@ -38,7 +38,7 @@ module.exports = function(grunt) {
             pages: {
                 expand: true,
                 cwd: 'source/templates/pages',
-                src: ['**/*.hbs'],
+                src: ['**/*.{hbs,handlebars}'],
                 dest: 'dist/'
             }
         },

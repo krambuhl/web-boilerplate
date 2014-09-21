@@ -285,5 +285,8 @@ gulp.task('sync', ['grunt-update_json']);
 gulp.task('scripts', ['lib', 'app']);
 gulp.task('copy', ['copy-images', 'copy-fonts']);
 
-gulp.task('develop', ['compile', 'watch']);
+gulp.task('develop', function(done) {
+  sequence('compile', 'watch', done);
+});
+
 gulp.task('default', ['develop']);
