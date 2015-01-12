@@ -1,1 +1,0 @@
-import AppView from './app'

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr" class="{{#if env.production}}env-production{{else}}env-develop{{/if}}">
+<head>
+  <title>{{site.title}}</title>
+  <meta name="description" content="{{site.description}}" />
+  <meta name="author" content="{{site.author}}" />
+  <meta name="version" content="{{pkg.version}}" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+  <meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <!-- mobile icon -->
+  <link rel="shortcut icon" href="{{site.icon}}">
+  <link rel="apple-touch-icon" href="{{site.apple-icon}}">
+
+  {{#each site.stylesheets}}
+  <link href="/assets/{{.}}{{#if ../env.production}}.min{{/if}}.css" rel="stylesheet" />
+  {{/each}}
+  
+  {{>iconizr-fragment}}
+</head>
+
+<body>
